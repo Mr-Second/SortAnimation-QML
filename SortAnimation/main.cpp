@@ -4,6 +4,8 @@
 #include "BubbleSort.hpp"
 #include "RandomGenerator.hpp"
 
+#define rg RandomGenerator::instance()
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -19,9 +21,8 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
-    auto data = rg->getData(10);
     auto cmp = [](int i, int j) ->bool {return i < j;};
-    ISort *sortTool = new BubbleSort(data, cmp);
+    ISort *sortTool = new BubbleSort(rg->getData(10, 1, 100), cmp);
     sortTool->sort();
 
     return app.exec();

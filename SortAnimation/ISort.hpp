@@ -4,15 +4,16 @@
 #include <QObject>
 #include <QVector>
 #include <QString>
+#include <QDebug>
 
 #include <chrono>
 #include <utility>
 #include <algorithm>
 #include <functional>
 
-#include <fmt/core.h>
-#include <fmt/chrono.h>
-#include <fmt/ranges.h>
+#include "fmt/core.h"
+#include "fmt/chrono.h"
+#include "fmt/ranges.h"
 
 class ISort: public QObject {
 
@@ -21,9 +22,9 @@ signals:
 
 public:
     explicit ISort(const QVector<int>& vec, std::function<bool(int, int)>&& func, QString&& name)
-        : m_name{name}, cmp{func}, m_data{vec}, m_swapTime{0} {};
+        : m_name{name}, cmp{func}, m_data{vec}, m_swapTime{0} {}
 
-    void sort() { monitorMission(std::bind(&ISort::_sort, this)); };
+    void sort() { monitorMission(std::bind(&ISort::_sort, this)); }
 
 protected:
     virtual void _sort() = 0;
@@ -32,16 +33,16 @@ protected:
     QVector<int> m_data;
 
     bool isEmpty() {return m_data.empty();}
-    size_t size() {return m_data.size();}
+    int size() {return m_data.size();}
     bool isValidIndex(int index) {return index >= 0 && index < m_data.size();}
 
-    void swap(size_t i, size_t j);
+    void swap(int i, int j);
     void monitorMission(const std::function<void()>& func);
 private:
     size_t m_swapTime;
 };
 
-void ISort::swap(size_t i, size_t j) {
+void ISort::swap(int i, int j) {
     if(!isValidIndex(i) || !isValidIndex(j)) {
         fmt::print("index {} or index {} is (are) out of range!", i, j);
     } else {
@@ -59,6 +60,7 @@ void ISort::monitorMission(const std::function<void ()>& func) {
     auto end = std::chrono::system_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     fmt::print("Algorithm {} sorts {} numbers and cost time of {}, swap times {}, the numbers are ordered: {}\n", m_name.toStdString(), size(), duration, m_swapTime, std::is_sorted(m_data.begin(), m_data.end(), cmp));
+    fmt::print("{}\n", m_data.toStdVector());
 }
 
 

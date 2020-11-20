@@ -13,18 +13,12 @@ DEFINES += QT_DEPRECATED_WARNINGS QT_QML_DEBUG_NO_WARNING
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    fmt/format.cc \
+    fmt/os.cc
 
 RESOURCES += qml.qrc
 
-INCLUDEPATH += /usr/local/include/
-LIBS += /usr/local/lib/libfmt.a
-
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
-
-# Additional import path used to resolve QML modules just for Qt Quick Designer
-QML_DESIGNER_IMPORT_PATH =
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -34,4 +28,17 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     BubbleSort.hpp \
     ISort.hpp \
-    RandomGenerator.hpp
+    RandomGenerator.hpp \
+    fmt/chrono.h \
+    fmt/color.h \
+    fmt/compile.h \
+    fmt/core.h \
+    fmt/format-inl.h \
+    fmt/format.h \
+    fmt/locale.h \
+    fmt/os.h \
+    fmt/ostream.h \
+    fmt/posix.h \
+    fmt/printf.h \
+    fmt/ranges.h
+

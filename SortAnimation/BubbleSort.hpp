@@ -15,13 +15,13 @@ protected:
 void BubbleSort::_sort() {
     if(isEmpty())
         fmt::print("Array is empty, terminate!\n");
-    size_t sz = size();
-    size_t sortedBorder = sz - 1;
-    size_t lastExchangeIndex = 0;
+    int sz = size();
+    int sortedBorder = sz - 1;
+    int lastExchangeIndex = 0;
 
-    for(size_t i = 0; i < sz - 1; ++i) {
+    for(int i = 0; i < sz - 1; ++i) {
         bool hasSwap = false;
-        for(size_t j = 0; j < sortedBorder; ++j) {
+        for(int j = 0; j < sortedBorder; ++j) {
             if(cmp(m_data[j], m_data[j + 1])) {
                 swap(i, j);
                 hasSwap = true;
