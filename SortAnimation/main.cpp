@@ -1,27 +1,17 @@
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-
+#include "board.h"
 #include "BubbleSort.hpp"
+#include "QuickSort.hpp"
 #include "RandomGenerator.hpp"
 
-#define rg RandomGenerator::instance()
+#include <QApplication>
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
-
-    QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
-    engine.load(url);
-
+    QApplication a(argc, argv);
+    Board w;
+    w.show();
     auto cmp = [](int i, int j) ->bool {return i < j;};
-    ISort *sortTool = new BubbleSort(rg->getData(10, 1, 100), cmp);
+    ISort *sortTool = new QuickSort(rg->getData(50, 1, 100), cmp);
     sortTool->sort();
-
-    return app.exec();
+    return a.exec();
 }
