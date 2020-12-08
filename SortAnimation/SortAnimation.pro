@@ -1,7 +1,8 @@
 QT += quick
 
-CONFIG += c++14
+CONFIG += c++14 sdk_no_version_check
 
+# :-1: warning: Project WARNING: with CONFIG+= when running qmake to silence this warning.
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Refer to the documentation for the
@@ -26,6 +27,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    InsertSort.hpp \
+    MergeSort.hpp \
+    QuickSort.hpp \
+    SelectSort.hpp \
+    ShellSort.hpp \
     BubbleSort.hpp \
     ISort.hpp \
     RandomGenerator.hpp \
